@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semakan PB DFK20013</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-purple: #6c5ce7;
+            --accent-orange: #ff793f;
+            --deep-purple: #4834d4;
+            --success-color: #27ae60;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #6c5ce7 0%, #ff793f 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #2d3436;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        h2 small {
+            display: block;
+            font-size: 0.9rem;
+            color: #636e72;
+            font-weight: 400;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+
+        /* Bahagian Input Form */
+        #searchArea {
+            transition: all 0.3s ease;
+        }
+
+        .input-box {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 2px solid #edeff2;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            text-align: center;
+            font-weight: 600;
+            color: var(--deep-purple);
+        }
+
+        .input-box:focus {
+            border-color: var(--accent-orange);
+            outline: none;
+            box-shadow: 0 0 8px rgba(255, 121, 63, 0.2);
+        }
+
+        .btn-main {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, var(--primary-purple), var(--accent-orange));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 700;
+            transition: 0.3s;
+            margin-bottom: 10px;
+        }
+
+        .btn-main:hover {
+            opacity: 0.9;
+            transform: scale(1.01);
+        }
+
+        /* Butang Back */
+        .btn-back {
+            background: #dfe6e9;
+            color: #2d3436;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .btn-back:hover {
+            background: #b2bec3;
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: left;
+            display: none;
+            border-top: 4px solid var(--accent-orange);
+            padding-top: 25px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .status-header {
+            color: var(--success-color);
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            border-bottom: 1px solid #f8f9fa;
+            padding-bottom: 5px;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--deep-purple);
+            width: 160px;
+        }
+
+        .info-value {
+            color: #2d3436;
+            flex: 1;
+        }
+
+        .target-box {
+            margin-top: 25px;
+            background-color: #fffaf0;
+            border-left: 5px solid var(--accent-orange);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .target-header {
+            font-weight: 700;
+            color: #e67e22;
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        .target-body {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #353b48;
+        }
+
+        .mark-highlight {
+            font-weight: 700;
+            color: #d35400;
+        }
+
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Semakan Markah PB<br>
+            <small>Sesi: 2 2025/2026<br>
+                <b>DFK20013 Web Design Technology</b><br>
+                Madam Shu Haila Mohd Yusof</small>
+        </h2>
+
+        <div id="searchArea">
+            <input type="text" id="regNo" class="input-box" placeholder="Masukkan Registration No">
+            <button id="btnSemak" class="btn-main" onclick="checkMarks()">Semak Markah PB</button>
+        </div>
+
+        <div id="result">
+            <div class="status-header">REKOD DITEMUI:</div>
+
+            <div class="info-row">
+                <span class="info-label">Nama</span>
+                <span class="info-value">: <span id="resNama"></span></span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Kelas</span>
+                <span class="info-value">: <span id="resKelas"></span></span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Markah PB (70%)</span>
+                <span class="info-value">: <span id="resM70" style="font-weight:700"></span></span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Markah PB (100%)</span>
+                <span class="info-value">: <span id="resM100"></span></span>
+            </div>
+
+            <div class="target-box">
+                <div class="target-header">🎯 Target Gred A:</div>
+                <div id="targetMsg" class="target-body"></div>
+            </div>
+
+            <div style="text-align: center;">
+                <button class="btn-back" onclick="resetForm()">← Semak Semula</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function checkMarks() {
+            const input = document.getElementById('regNo');
+            const regNo = input.value.trim().toUpperCase();
+            const searchArea = document.getElementById('searchArea');
+            const resultDiv = document.getElementById('result');
+            const btn = document.getElementById('btnSemak');
+
+            if (!regNo) {
+                alert("Sila masukkan No. Pendaftaran!");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<div class="loader"></div> Sila tunggu...';
+
+            const scriptUrl = "https://script.google.com/macros/s/AKfycbz-U0xYKd7BpAuv-FLZRmiXaydabIRL-RSBrmpHL0h0SG7TSLXF1855DIysRjs35tCKEA/exec";
+            const finalUrl = scriptUrl + "?id=" + regNo;
+
+            try {
+                const response = await fetch(finalUrl);
+                const data = await response.json();
+
+                if (data.status === "success") {
+                    // Masukkan data
+                    document.getElementById('resNama').innerText = data.nama;
+                    document.getElementById('resKelas').innerText = data.kelas;
+                    document.getElementById('resM70').innerText = data.m70;
+                    document.getElementById('resM100').innerText = data.m100;
+
+                    // Logik Sasaran A
+                    const pb = parseFloat(data.m70);
+                    const baki = 80 - pb;
+                    let msg = "";
+
+                    if (baki <= 0) {
+                        msg = "Tahniah! Anda sudah mencapai markah minimum untuk Gred A.";
+                    } else if (baki > 30) {
+                        msg = "Markah PB anda memerlukan usaha yang sangat luar biasa untuk mencapai Gred A. Teruskan berusaha!";
+                    } else {
+                        const paReq = (baki / 30) * 100;
+                        msg = `Untuk mendapat <b>Gred A (80%)</b>, anda perlu skor sekurang-kurangnya <span class="mark-highlight">${paReq.toFixed(1)}/100</span> dalam Peperiksaan Akhir (PA).`;
+                    }
+
+                    document.getElementById('targetMsg').innerHTML = msg;
+
+                    // SOROK INPUT & TUNJUK RESULT
+                    searchArea.style.display = 'none';
+                    resultDiv.style.display = 'block';
+                } else {
+                    alert("Rekod tidak ditemui!");
+                    btn.disabled = false;
+                    btn.innerText = "Semak Markah PB";
+                }
+            } catch (e) {
+                alert("Ralat sambungan. Sila cuba lagi.");
+                btn.disabled = false;
+                btn.innerText = "Semak Markah PB";
+            }
+        }
+
+        // Fungsi untuk kembali ke carian
+        function resetForm() {
+            document.getElementById('searchArea').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('regNo').value = '';
+            document.getElementById('btnSemak').disabled = false;
+            document.getElementById('btnSemak').innerText = "Semak Markah PB";
+        }
+
+        document.getElementById('regNo').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') checkMarks();
+        });
+    </script>
+
+</body>
+
+</html>
